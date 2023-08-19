@@ -1,2 +1,20 @@
 #常用脚本或Linux命令
 exiftool
+根据文件名中的时间修改媒体时间
+#文件名20131208_092319_07FB2225.mp4
+exiftool  "-MediaCreateDate<Filename" "-CreateDate<Filename" *.mp4
+#增加时区参数 -api QuickTimeUTC，是否用时间参考自行测试下，本地测试win上需要加，linux不需要
+#添加-overwrite_original以禁止创建备份文件
+exiftool -api QuickTimeUTC "-MediaCreateDate<Filename" "-CreateDate<Filename" *.mp4
+
+exiftool -overwrite_original -api QuickTimeUTC "-MediaCreateDate<Filename" "-CreateDate<Filename" *.mp4
+
+#如果需要遍历子文件夹，在 exiftool 后面加上 -r
+
+#-P选项将保留并覆盖传递给它的标签的值，而忽略其余也需要的标签
+#图片只修改CreateDate也行
+exiftool -api QuickTimeUTC "-CreateDate<Filename" *.jpg
+exiftool -overwrite_original -api QuickTimeUTC "-CreateDate=2023:7:17 15:05:42" *.jpg
+#修改图片经纬度
+exiftool -GPSLatitudeRef=N -GPSLatitude=24.696547 \
+         -GPSLongitudeRef=E -GPSLongitude=46.685257 1.jpg
